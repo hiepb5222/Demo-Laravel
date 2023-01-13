@@ -40,4 +40,18 @@ class User extends Authenticatable
     protected $guarded = [
         "is_admin",
     ];
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => $attributes['first_name'] . " " . $attributes['last_name'],
+        );
+    }
+
+    protected function userName(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => Str::slug($value, '-'),
+        );
+    }
 }
